@@ -10,21 +10,24 @@ import SignUp from "./pages/Auth/SignUp";
 import Home from "./pages/Dashboard/Home";
 import Income from "./pages/Dashboard/Income";
 import Expense from "./pages/Dashboard/Expense";
+import UserProvider from "./context/UserContext";
 
 const App = () => {
   return (
-    <div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Root />} />
-          <Route path="/signup" exact element={<SignUp />} />
-          <Route path="/login" exact element={<Login />} />
-          <Route path="/dashboard" exact element={<Home />} />
-          <Route path="/income" exact element={<Income />} />
-          <Route path="/expense" exact element={<Expense />} />
-        </Routes>
-      </Router>
-    </div>
+    <UserProvider>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Root />} />
+            <Route path="/signup" exact element={<SignUp />} />
+            <Route path="/login" exact element={<Login />} />
+            <Route path="/dashboard" exact element={<Home />} />
+            <Route path="/income" exact element={<Income />} />
+            <Route path="/expense" exact element={<Expense />} />
+          </Routes>
+        </Router>
+      </div>
+    </UserProvider>
   );
 };
 
@@ -32,7 +35,7 @@ export default App;
 
 const Root = () => {
   // CHECK IF TOKEN EXISTS IN localStorage
-  const isAuthenticated = !localStorage.getItem("token");
+  const isAuthenticated = localStorage.getItem("token");
 
   // REDIRECT TO DASHBOARD IF AUTHENTICATED, OTHERWISE TO LOGIN
   return isAuthenticated ? (
