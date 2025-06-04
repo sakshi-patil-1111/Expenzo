@@ -43,10 +43,12 @@ const Login = () => {
 
       if (token) {
         localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
         updateUser(user);
         navigate("/dashboard");
       }
     } catch (error) {
+      console.log(error);
       if (error.response && error.response.data.message) {
         setError(error.response.data.message);
       } else {

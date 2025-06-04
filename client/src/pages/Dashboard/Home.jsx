@@ -1,11 +1,13 @@
 import React from "react";
+import DashboardLayout from "../../components/layouts/DashboardLayout";
+import { useUserAuth } from "../../hooks/useUserAuth";
 
 const Home = () => {
+  useUserAuth();
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>Welcome to your dashboard!</p>
-    </div>
+    <DashboardLayout activeMenu="Dashboard">
+      <div className="my-5 mx-auto"></div>
+    </DashboardLayout>
   );
 };
 

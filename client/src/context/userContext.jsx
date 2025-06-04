@@ -1,9 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem("user");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
   // Function to update user data
   const updateUser = (userData) => {
@@ -19,6 +22,7 @@ const UserProvider = ({ children }) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
         updateUser,
         clearUser,
       }}
