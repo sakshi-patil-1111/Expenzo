@@ -32,7 +32,7 @@ export default App;
 
 const Root = () => {
   // CHECK IF TOKEN EXISTS IN localStorage
-  const isAuthenticated = !!localStorage.getItem("token");
+  const isAuthenticated = !localStorage.getItem("token");
 
   // REDIRECT TO DASHBOARD IF AUTHENTICATED, OTHERWISE TO LOGIN
   return isAuthenticated ? (
