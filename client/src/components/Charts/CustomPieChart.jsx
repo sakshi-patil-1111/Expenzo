@@ -27,7 +27,7 @@ const CustomPieChart = ({
           cx="50%"
           cy="50%"
           outerRadius={130}
-          innerRadius={100}
+          innerRadius={90}
           labelLine={false}
         >
           {data.map(({ entry, index }) => (
