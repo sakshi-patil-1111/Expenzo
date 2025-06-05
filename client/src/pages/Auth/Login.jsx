@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
-import AuthLayout from "../../components/layouts/AuthLayout";
+import AuthLayout from "../../components/layouts/AuthLayout.jsx";
 import { useNavigate } from "react-router-dom";
-import Input from "../../components/Inputs/Input";
+import Input from "../../components/Inputs/Input.jsx";
 import { Link } from "react-router-dom";
 import { validateEmail } from "../../utils/helper.js";
 import axiosInstance from "../../utils/axiosInstance.js";
