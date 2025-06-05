@@ -30,12 +30,15 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    // HANDLE COMMON ERRORS GLOBALLY
-    if (error.response.status === 401) {
-      // Redirect to login page
-      window.location.href = "/login";
-    } else if (error.response.status === 500) {
-      console.error("Server error. Please try again later.");
+    if (error.response) {
+      if (error.response.status === 401) {
+        // Clear auth data and redirect to login
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.href = "/login";
+      } else if (error.response.status === 500) {
+        console.error("Server error. Please try again later.");
+      }
     } else if (error.code === "ECONNABORTED") {
       console.error("Request timeout. Please try again.");
     }

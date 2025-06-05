@@ -27,11 +27,10 @@ exports.getDashboardData = async (req, res) => {
     }).sort({ date: -1 });
 
     // Get total income for last 60 days
-    const totalLast60DaysIncomeTransactions =
-      last60DaysIncomeTransactions.reduce(
-        (sum, transaction) => sum + transaction.amount,
-        0
-      );
+    const incomeLast60Days = last60DaysIncomeTransactions.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0
+    );
 
     // Get expense transactions in the last 30 days
     const last30DaysExpenseTransactions = await Expense.find({
@@ -40,30 +39,25 @@ exports.getDashboardData = async (req, res) => {
     }).sort({ date: -1 });
 
     // Get total expenses for last 30 days
-    const totalLast30DaysExpenseTransactions =
-      last30DaysExpenseTransactions.reduce(
-        (sum, transaction) => sum + transaction.amount,
-        0
-      );
+    const expensesLast30Days = last30DaysExpenseTransactions.reduce(
+      (sum, transaction) => sum + transaction.amount,
+      0
+    );
 
     // Fetch last 5 transactions (income + expenses)
     const lastTransactions = [
-      ...txn_income
-        .find({ userId })
-        .sort({ date: -1 })
-        .limit(5)
-        .map((txn) => ({
+      ...(await Income.find({ userId }).sort({ date: -1 }).limit(5)).map(
+        (txn) => ({
           ...txn.toObject(),
           type: "income",
-        })),
-      ...txn_expense
-        .find({ userId })
-        .sort({ date: -1 })
-        .limit(5)
-        .map((txn) => ({
+        })
+      ),
+      ...(await Expense.find({ userId }).sort({ date: -1 }).limit(5)).map(
+        (txn) => ({
           ...txn.toObject(),
           type: "expense",
-        })),
+        })
+      ),
     ].sort((a, b) => b.date - a.date); // latest first
 
     res.json({
@@ -73,6 +67,7 @@ exports.getDashboardData = async (req, res) => {
       totalExpenses: totalExpense[0]?.total || 0,
       last30DaysExpenses: {
         total: expensesLast30Days,
+        transactions: last30DaysExpenseTransactions,
       },
       last60DaysIncome: {
         total: incomeLast60Days,
@@ -81,6 +76,7 @@ exports.getDashboardData = async (req, res) => {
       recentTransactions: lastTransactions,
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: "Server Error" });
   }
 };
