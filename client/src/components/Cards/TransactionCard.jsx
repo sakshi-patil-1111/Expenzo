@@ -13,6 +13,7 @@ const TransactionCard = ({
   amount,
   type,
   hideDeleteBtn,
+  onDelete,
 }) => {
   const getAmountStyles = () => {
     if (type === "income") {
