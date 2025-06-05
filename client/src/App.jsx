@@ -6,7 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Login from "./pages/Auth/Login.jsx";
-import SignUp from "./pages/Auth/Signup.jsx";
+import Signup from "./pages/Auth/Signup.jsx";
 import Home from "./pages/Dashboard/Home.jsx";
 import Income from "./pages/Dashboard/Income.jsx";
 import Expense from "./pages/Dashboard/Expense.jsx";
@@ -20,7 +20,7 @@ const App = () => {
         <Router>
           <Routes>
             <Route path="/" element={<Root />} />
-            <Route path="/signup" exact element={<SignUp />} />
+            <Route path="/signup" exact element={<Signup />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/dashboard" exact element={<Home />} />
             <Route path="/income" exact element={<Income />} />
